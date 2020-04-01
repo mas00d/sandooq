@@ -15,8 +15,15 @@ public class TransactionsFileUtility {
 
 
         for (int i = inputFiles.length - 1; i >= 0; i--) {
-            //TODO: remove duplicate transactions.
-            result.addAll(readTransactions(inputFiles[i]));
+            List<Transaction> partTransactions = readTransactions(inputFiles[i]);
+            int deleteIndex = 0;
+            assert partTransactions != null;
+            for (; deleteIndex < partTransactions.size(); deleteIndex++) {
+                if (!result.contains(partTransactions.get(deleteIndex))) {
+                    break;
+                }
+            }
+            result.addAll(partTransactions.subList(deleteIndex, partTransactions.size()));
         }
 
         return result;

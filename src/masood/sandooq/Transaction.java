@@ -4,6 +4,8 @@ package masood.sandooq;
 import masood.sandooq.model.Customer;
 import masood.sandooq.model.Customers;
 
+import java.util.Objects;
+
 public class Transaction {
 
     public static final String MEMBERSHIP_FEE = "حق عضويت";
@@ -119,6 +121,20 @@ public class Transaction {
 
     public int getInstallmentOrder() {
         return installmentOrder;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Transaction)) return false;
+        Transaction that = (Transaction) o;
+        //I use contains instead of equals, because some unicode unexpected characters added to transactionRaw!!!
+        return transactionRaw.contains(that.transactionRaw) || that.transactionRaw.contains(transactionRaw);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(transactionRaw);
     }
 
     @Override
