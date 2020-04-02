@@ -34,4 +34,13 @@ public class Month {
             throw new RuntimeException();
         }
     }
+
+    public static boolean isValid(String maybeMonthName) {
+        for (String month : monthNames) {
+            if (month.equals(maybeMonthName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

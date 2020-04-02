@@ -25,6 +25,9 @@ public class Transaction {
         this.transactionRaw = transactionRaw;
         this.transactionDesc = calculateTransactionDesc(transactionRaw);
 
+        if (!TransactionDescValidator.isValid(transactionDesc)) {
+            throw new RuntimeException();
+        }
         this.customer = evaluateCustomer(transactionDesc);
 
         if (this.customer == null) {
@@ -37,7 +40,7 @@ public class Transaction {
 
     private String calculateTransactionDesc(String transactionRaw) {
         String[] tokens = transactionRaw.split(",");
-        return tokens[tokens.length - 1];
+        return tokens[tokens.length - 1].trim();
     }
 
 

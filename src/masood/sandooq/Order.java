@@ -37,4 +37,12 @@ public class Order {
         return ORDERS[newOrder];
     }
 
+    public static boolean isValidOrder(String maybeOrderName) {
+        for (String order : ORDERS) {
+            if (order.equals(maybeOrderName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
