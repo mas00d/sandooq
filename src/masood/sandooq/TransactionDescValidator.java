@@ -2,6 +2,8 @@ package masood.sandooq;
 
 import masood.sandooq.model.Customers;
 
+import java.util.function.Predicate;
+
 public class TransactionDescValidator {
     private static final String BORROW_FROM_THE_FUND = "قرض کوتاه مدت از صندوق";
     private static final String RETURN_BORROW_FROM_THE_FUND = "بازپرداخت قرض کوتاه مدت از صندوق";
@@ -15,40 +17,19 @@ public class TransactionDescValidator {
     private static final String OPEN_ACCOUNT_COST = "ساير - برگشت هزينه افتتاح سپرده";
     private static final String OPEN_ACCOUNT_COST_2 = "ساير - هزار تومان هزينه افتتاح سپرده - پنجاه هزار تومان ته مانده سپرده براي واريزي ها به صندوق";
 
+    private static final Predicate<String> validDescriptions = ((Predicate<String>) BANK_INTEREST::equals)
+            .or(WRONG_CREDIT::equals)
+            .or(REVERT_WRONG_CREDIT::equals)
+            .or(BORROW_FROM_THE_FUND::equals)
+            .or(OPEN_ACCOUNT_COST::equals)
+            .or(OPEN_ACCOUNT_COST_2::equals)
+            .or(TransactionDescValidator::isReturnBorrowFromTheFund)
+            .or(TransactionDescValidator::isInstallment)
+            .or(TransactionDescValidator::isMembershipFee)
+            .or(TransactionDescValidator::isLoanPaying);
 
     public static boolean isValid(String transactionDesc) {
-        if (isBorrowFromTheFund(transactionDesc)) {
-            return true;
-        }
-        if (isReturnBorrowFromTheFund(transactionDesc)) {
-            return true;
-        }
-        if (isBankInterest(transactionDesc)) {
-            return true;
-        }
-        if (isWrongCredit(transactionDesc)) {
-            return true;
-        }
-        if (isRevertWrongCredit(transactionDesc)) {
-            return true;
-        }
-        if (isInstallment(transactionDesc)) {
-            return true;
-        }
-        if (isMembershipFee(transactionDesc)) {
-            return true;
-        }
-        if (isLoanPaying(transactionDesc)) {
-            return true;
-        }
-        if (isOpenAccountCost(transactionDesc)) {
-            return true;
-        }
-        return isOpenAccountCost2(transactionDesc);
-    }
-
-    private static boolean isBorrowFromTheFund(String transactionDesc) {
-        return BORROW_FROM_THE_FUND.equals(transactionDesc);
+        return validDescriptions.test(transactionDesc);
     }
 
     private static boolean isReturnBorrowFromTheFund(String transactionDesc) {
@@ -87,26 +68,6 @@ public class TransactionDescValidator {
             return false;
         }
         return true;
-    }
-
-    private static boolean isBankInterest(String transactionDesc) {
-        return BANK_INTEREST.equals(transactionDesc);
-    }
-
-    private static boolean isWrongCredit(String transactionDesc) {
-        return WRONG_CREDIT.equals(transactionDesc);
-    }
-
-    private static boolean isRevertWrongCredit(String transactionDesc) {
-        return REVERT_WRONG_CREDIT.equals(transactionDesc);
-    }
-
-    private static boolean isOpenAccountCost(String transactionDesc) {
-        return OPEN_ACCOUNT_COST.equals(transactionDesc);
-    }
-
-    private static boolean isOpenAccountCost2(String transactionDesc) {
-        return OPEN_ACCOUNT_COST_2.equals(transactionDesc);
     }
 
     private static boolean isInstallment(String transactionDesc) {
