@@ -37,11 +37,9 @@ public class Customers {
     }
 
     public Customer getCustomerFromName(String name) {
-        System.out.println("getCustomerFromName");
         name = name.trim();
         for (Customer customer : customers) {
             if (customer.getName().equals(name)) {
-                System.out.println("find customer" + customer.getName());
                 return customer;
             }
         }
@@ -49,11 +47,9 @@ public class Customers {
     }
 
     public Customer getCustomerFromId(String id) {
-        System.out.println("getCustomerFromName");
         id = id.trim();
         for (Customer customer : customers) {
             if (customer.getId().equals(id)) {
-                System.out.println("find customer" + customer.getName());
                 return customer;
             }
         }

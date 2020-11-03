@@ -7,8 +7,6 @@ import java.util.List;
 
 public class Main {
 
-
-    //    ArrayList[] peopleTransactions = new ArrayList[20];
     List<Transaction> transactions = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -23,65 +21,23 @@ public class Main {
         List<NextTransaction> nextTransactions = NextTransactionFileUtility.readFile();
 
         for (NextTransaction nextTransaction : nextTransactions) {
-            System.out.println(nextTransaction.toString());
-
-            for (Transaction transaction : obj.transactions) {
-                if ((transaction.getCustomer() != null) && (nextTransaction.customer == transaction.getCustomer())) {
-//                    System.out.println("customer match");
-                    if (transaction.getTransactionType() == nextTransaction.transactionType) {
-//                        System.out.println("tt match");
-                        for (int i = 1; i <= nextTransaction.count; i++) {
-//                            System.out.println("hurra");
-                            System.out.println(obj.nextTransaction(transaction, i));
+            if (nextTransaction.count > 0) {
+                for (Transaction transaction : obj.transactions) {
+                    if ((transaction.getCustomer() != null) && (nextTransaction.customer == transaction.getCustomer())) {
+                        if (transaction.getTransactionType() == nextTransaction.transactionType) {
+                            for (int i = 1; i <= nextTransaction.count; i++) {
+                                for (String str : NextTranCalculator.nextTransaction(transaction, i)) {
+                                    System.out.println(str);
+                                }
+                                System.out.println();
+                            }
+                            break;
                         }
-                        break;
                     }
-                } else {
-//                    System.out.println(transaction.getCustomerFromName());
                 }
+                System.out.println();
+                System.out.println("-------------------------------------------");
             }
-            System.out.println();
-            System.out.println("-------------------------------------------");
         }
     }
-
-    private String nextTransaction(Transaction transaction, int i) {
-        String newDescription;
-        int month;
-
-        switch (transaction.getTransactionType()) {
-            case MEMBERSHIP_FEE:
-                newDescription = transaction.getTransactionDesc();
-                month = transaction.getMonthNumber();
-                //TODO: موحدی شامل زیر رشته دی است. برای همین برای استخراج ماه دی به مشکل می خورم. راه زیر به صورت موقت نوشته شده است. با راه درست جایگزین کنید.
-                newDescription = newDescription.replace(
-                        " " + Month.nextMonth(month, 0) + " ",
-                        " " + Month.nextMonth(month, i) + " ");
-                if (month + i > 12) {
-                    newDescription = newDescription.replace(Integer.toString(transaction.getYear()), Integer.toString(transaction.getYear() + 1));
-                }
-                return newDescription.trim();
-
-            case INSTALLMENT:
-                newDescription = transaction.getTransactionDesc();
-                month = transaction.getMonthNumber();
-                newDescription = newDescription.replace(
-                        " " + Month.nextMonth(month, 0) + " ",
-                        " " + Month.nextMonth(month, i) + " ");
-                if (month + i > 12) {
-                    newDescription = newDescription.replace(Integer.toString(transaction.getYear()), Integer.toString(transaction.getYear() + 1));
-                }
-                //Todo: کد زیر تمیز نیست. بازبینی شود
-                int installmentCount = (transaction.getLoanPayingOrder() == 4) ? 15 : 10;
-                if (transaction.getInstallmentOrder() + i <= installmentCount) {
-                    newDescription = newDescription.replace(Order.nextOrder(transaction.getInstallmentOrder(), 0),
-                            Order.nextOrder(transaction.getInstallmentOrder(), i));
-                } else {
-                    return "Loan is zero";
-                }
-                return newDescription.trim();
-        }
-        return "Invalid transaction";
-    }
-
 }

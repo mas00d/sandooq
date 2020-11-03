@@ -77,7 +77,6 @@ public class Transaction {
             return null;
         }
         String name = transactionDesc.substring(0, dashIndex).trim();
-        System.out.println("customer name = " + name);
         return Customers.getInstance().getCustomerFromName(name);
     }
 

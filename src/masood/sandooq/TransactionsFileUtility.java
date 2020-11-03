@@ -2,7 +2,10 @@ package masood.sandooq;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class TransactionsFileUtility {
     public static final String INPUT_FOLDER = "c:\\Masood\\Projects\\Sandooq\\Program\\input";
@@ -32,6 +35,7 @@ public class TransactionsFileUtility {
 
     /**
      * Oldest file must be named 01.txt, next 2.txt and so on.
+     *
      * @return Sorted input files from oldest to newest.
      */
     private static File[] getInputFiles() {
@@ -65,7 +69,6 @@ public class TransactionsFileUtility {
         while (in.hasNext()) {
             str = in.nextLine();
             String[] tokens = str.split(",");
-            System.out.println(tokens[tokens.length - 1]);
             result.add(new Transaction(str));
         }
         return result;
