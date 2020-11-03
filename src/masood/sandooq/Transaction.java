@@ -16,6 +16,7 @@ public class Transaction {
     private final String transactionRaw;
     private final String transactionDesc;
     private final TransactionType transactionType;
+    private final int amount;
     private final Customer customer;
     private int monthNumber;
     private int year;
@@ -24,7 +25,16 @@ public class Transaction {
 
     public Transaction(String transactionRaw) {
         this.transactionRaw = transactionRaw;
-        this.transactionDesc = calculateTransactionDesc(transactionRaw);
+
+        String[] tokens = transactionRaw.split(",");
+        transactionDesc = tokens[tokens.length - 1].trim();
+
+        int creditAmount = Integer.parseInt(tokens[3].trim());
+        if (0 != creditAmount) {
+            amount = creditAmount;
+        } else {
+            amount = Integer.parseInt(tokens[4].trim()) * -1;
+        }
 
         if (!TransactionDescValidator.isValid(transactionDesc)) {
             throw new RuntimeException();
@@ -36,12 +46,6 @@ public class Transaction {
         } else {
             this.transactionType = evaluateType(transactionDesc);
         }
-    }
-
-
-    private String calculateTransactionDesc(String transactionRaw) {
-        String[] tokens = transactionRaw.split(",");
-        return tokens[tokens.length - 1].trim();
     }
 
 
@@ -109,6 +113,10 @@ public class Transaction {
 
     public TransactionType getTransactionType() {
         return transactionType;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     public Customer getCustomer() {
