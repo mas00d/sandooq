@@ -20,6 +20,7 @@ public class Transaction {
     private int monthNumber;
     private int year;
     private int installmentOrder;
+    private int loanPayingOrder;
 
     public Transaction(String transactionRaw) {
         this.transactionRaw = transactionRaw;
@@ -96,6 +97,14 @@ public class Transaction {
         this.year = Integer.parseInt(tokens[tokens.length - 1]);
 
         this.installmentOrder = Order.getOrder(transactionDesc);
+
+        int ind = transactionDesc.indexOf(TransactionDescValidator.LOAN);
+        String digitChar = transactionDesc.substring(ind + 4, ind + 5);
+        try {
+            loanPayingOrder = Integer.parseInt(digitChar);
+        } catch (NumberFormatException e) {
+            loanPayingOrder = -1;
+        }
     }
 
     public TransactionType getTransactionType() {
@@ -124,6 +133,10 @@ public class Transaction {
 
     public int getInstallmentOrder() {
         return installmentOrder;
+    }
+
+    public int getLoanPayingOrder() {
+        return loanPayingOrder;
     }
 
     @Override

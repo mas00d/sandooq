@@ -9,7 +9,7 @@ public class TransactionDescValidator {
     private static final String RETURN_BORROW_FROM_THE_FUND = "بازپرداخت قرض کوتاه مدت از صندوق";
     private static final String FROM = "از";
     private static final String BANK_INTEREST = "سود علي الحساب";
-    private static final String LOAN = "وام";
+    public  static final String LOAN = "وام";
     private static final String LOAN_PAYMENT = "دريافت وام سري";
     private static final String FIRST_INSTALLMENT = "قسط اول";
     private static final String WRONG_CREDIT = "واريز اشتباه";

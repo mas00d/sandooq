@@ -1,7 +1,6 @@
 package masood.sandooq;
 
 import masood.sandooq.io.CustomersReader;
-import masood.sandooq.model.Customers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +71,9 @@ public class Main {
                 if (month + i > 12) {
                     newDescription = newDescription.replace(Integer.toString(transaction.getYear()), Integer.toString(transaction.getYear() + 1));
                 }
-                if (transaction.getInstallmentOrder() + i <= 10) {
+                //Todo: کد زیر تمیز نیست. بازبینی شود
+                int installmentCount = (transaction.getLoanPayingOrder() == 4) ? 15 : 10;
+                if (transaction.getInstallmentOrder() + i <= installmentCount) {
                     newDescription = newDescription.replace(Order.nextOrder(transaction.getInstallmentOrder(), 0),
                             Order.nextOrder(transaction.getInstallmentOrder(), i));
                 } else {

@@ -14,6 +14,9 @@ public class Order {
             "دهم",
             "يازدهم",
             "دوازدهم",
+            "سیزدهم",
+            "چهاردهم",
+            "پانزدهم",
     };
 
     public static int getOrder(String transactionDesc) {
@@ -31,7 +34,7 @@ public class Order {
 
     public static String nextOrder(int order, int nextCount) {
         int newOrder = order - 1 + nextCount;
-        if (newOrder >= 10) {
+        if (newOrder >= 15) {
             return "null";
         }
         return ORDERS[newOrder];
