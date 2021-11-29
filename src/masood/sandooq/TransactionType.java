@@ -4,5 +4,6 @@ public enum TransactionType {
     OTHER,
     LOAN_PAYING,
     MEMBERSHIP_FEE,
-    INSTALLMENT;
+    INSTALLMENT,
+    KARMOZD;
 }

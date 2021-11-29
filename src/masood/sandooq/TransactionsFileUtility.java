@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TransactionsFileUtility {
-    public static final String INPUT_FOLDER = "c:\\Masood\\Projects\\Sandooq\\Program\\input";
+    public static final String INPUT_FOLDER = "e:\\Masood\\Projects\\Sandooq\\Program\\input";
 
 
     public static List<Transaction> readAllFiles() {

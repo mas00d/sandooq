@@ -25,4 +25,19 @@ public class Customer {
     private String convertToAscii(String input) {
         return input.replaceAll("[^A-Za-z_\\-]+", "");
     }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+
+        Customer customer = (Customer) o;
+
+        return getId().equals(customer.getId());
+    }
 }

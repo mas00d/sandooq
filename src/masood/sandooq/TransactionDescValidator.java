@@ -25,6 +25,7 @@ public class TransactionDescValidator {
             .or(OPEN_ACCOUNT_COST_2::equals)
             .or(TransactionDescValidator::isReturnBorrowFromTheFund)
             .or(TransactionDescValidator::isInstallment)
+            .or(TransactionDescValidator::isInstallmentAll)
             .or(TransactionDescValidator::isMembershipFee)
             .or(TransactionDescValidator::isLoanPaying);
 
@@ -82,6 +83,37 @@ public class TransactionDescValidator {
             return false;
         }
         if (!Order.isValidOrder(tokens[1].trim())) {
+            return false;
+        }
+        String[] loanNameTokens = tokens[2].split("[-:]");
+        if ((loanNameTokens.length > 2) && !loanNameTokens[2].isEmpty()) {
+            return false;
+        }
+        if (!LOAN.equals(loanNameTokens[0])) {
+            return false;
+        }
+        if ((loanNameTokens.length > 1) && !loanNameTokens[1].isEmpty()) {
+            try {
+                int loanOrder = Integer.parseInt(loanNameTokens[1]);
+                if ((loanOrder < 1) || (loanOrder > 4)) {
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return isMonthAndYear(tokens[3].trim(), tokens[4].trim());
+    }
+
+    private static boolean isInstallmentAll(String transactionDesc) {
+        if (!startsWithCustomer(transactionDesc)) {
+            return false;
+        }
+        transactionDesc = removeCustomerFromTransactionDesc(transactionDesc);
+
+        String[] tokens = transactionDesc.split(" ");
+
+        if (!Transaction.INSTALLMENT_All.equals(tokens[0].trim() + " " + tokens[1].trim())) {
             return false;
         }
         String[] loanNameTokens = tokens[2].split("[-:]");
@@ -175,14 +207,13 @@ public class TransactionDescValidator {
         }
         return isMonthAndYear(tokens[1], tokens[2]);
     }
-
     private static boolean isMonthAndYear(String maybeMonth, String maybeYear) {
         if (!Month.isValid(maybeMonth)) {
             return false;
         }
         try {
             int year = Integer.parseInt(maybeYear);
-            if ((year < 1396) || (year > 1399)) {
+            if ((year < 1396) || (year > 1400)) {
                 return false;
             }
         } catch (NumberFormatException e) {

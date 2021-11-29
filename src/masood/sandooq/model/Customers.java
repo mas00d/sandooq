@@ -36,6 +36,10 @@ public class Customers {
         }
     }
 
+    public Customer[] getCustomers() {
+        return customers;
+    }
+
     public Customer getCustomerFromName(String name) {
         name = name.trim();
         for (Customer customer : customers) {

@@ -11,6 +11,10 @@ public class Transaction {
     public static final String MEMBERSHIP_FEE = "حق عضويت";
     public static final String INSTALLMENT = "قسط";
     public static final String LOAN_PAYING = "دريافت وام";
+    public static final String KARMOZD = "کارمزد";
+    public static final String INSTALLMENT_All = "بازپرداخت کامل";
+
+    public static final int KARMOZD_BOUNDARY = -3000;
 
 
     private final String transactionRaw;
@@ -37,6 +41,15 @@ public class Transaction {
         }
 
         if (!TransactionDescValidator.isValid(transactionDesc)) {
+            if (transactionDesc.isEmpty()) {
+                if (amount < 0 && amount >= KARMOZD_BOUNDARY) {
+                    if (transactionRaw.contains(KARMOZD)) {
+                        this.customer = null;
+                        this.transactionType = TransactionType.KARMOZD;
+                        return;
+                    }
+                }
+            }
             throw new RuntimeException();
         }
         this.customer = evaluateCustomer(transactionDesc);
@@ -65,6 +78,8 @@ public class Transaction {
         } else if (transactionDesc.contains(INSTALLMENT)) {
             //todo: مثال نقض: بازپرداخت قرض کوتاه مدت از صندوق قسط 2 از 2
             processInstallmentTransaction(transactionDesc);
+            return TransactionType.INSTALLMENT;
+        } else if (transactionDesc.contains(INSTALLMENT_All)) {
             return TransactionType.INSTALLMENT;
         } else {
             throw new RuntimeException("unknown type");
