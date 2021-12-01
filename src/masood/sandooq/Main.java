@@ -1,6 +1,8 @@
 package masood.sandooq;
 
 import masood.sandooq.io.CustomersReader;
+import masood.sandooq.model.Customer;
+import masood.sandooq.model.Customers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,11 @@ public class Main {
         obj.transactions = TransactionsFileUtility.readAllFiles();
 //        obj.process(statementDescription);
 
+        AssetCalculator assetCalculator = new AssetCalculator(obj.transactions);
+        for (Customer customer : Customers.getInstance().getCustomers()) {
+            System.out.print(customer.getName() + ":");
+            System.out.println(assetCalculator.getAsset(customer));
+        }
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //TODO: وقتی که می خواهم که یک خط در بین خطوط زیر اضافه کنم، باید همه اندیس ها را باز نویسی کنم. این خوب نیست
 //        NextTransaction[] nextTransactions = new NextTransaction[12];
