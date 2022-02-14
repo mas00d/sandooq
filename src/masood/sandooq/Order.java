@@ -1,7 +1,7 @@
 package masood.sandooq;
 
 public class Order {
-    private static final String[] ORDERS = new String[] {
+    private static final String[] ORDERS = new String[]{
             "اول",
             "دوم",
             "سوم",
@@ -20,7 +20,7 @@ public class Order {
     };
 
     public static int getOrder(String transactionDesc) {
-        for (int i = 0; i < ORDERS.length; i++) {
+        for (int i = ORDERS.length - 1; i >= 0; i--) {
             if (transactionDesc.contains(ORDERS[i])) {
                 return i + 1;
             }
