@@ -21,6 +21,7 @@ public class Transaction {
     private final String transactionDesc;
     private final TransactionType transactionType;
     private final int amount;
+    private final int balance;
     private final Customer customer;
     private int monthNumber;
     private int year;
@@ -40,7 +41,10 @@ public class Transaction {
             amount = Integer.parseInt(tokens[4].trim()) * -1;
         }
 
+        balance = Integer.parseInt(tokens[5].trim());
+
         if (!TransactionDescValidator.isValid(transactionDesc)) {
+            //TODO: add KARMOZD transaction to TransactionDescValidator.isValid method instead of here
             if (transactionDesc.isEmpty()) {
                 if (amount < 0 && amount >= KARMOZD_BOUNDARY) {
                     if (transactionRaw.contains(KARMOZD)) {
@@ -131,6 +135,10 @@ public class Transaction {
 
     public int getAmount() {
         return amount;
+    }
+
+    public int getBalance() {
+        return balance;
     }
 
     public Customer getCustomer() {

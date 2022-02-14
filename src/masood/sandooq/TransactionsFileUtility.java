@@ -68,7 +68,6 @@ public class TransactionsFileUtility {
         String str;
         while (in.hasNext()) {
             str = in.nextLine();
-            String[] tokens = str.split(",");
             result.add(new Transaction(str));
         }
         return result;
