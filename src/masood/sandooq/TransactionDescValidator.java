@@ -16,6 +16,7 @@ public class TransactionDescValidator {
     private static final String REVERT_WRONG_CREDIT = "برگشت واريز اشتباه";
     private static final String OPEN_ACCOUNT_COST = "ساير - برگشت هزينه افتتاح سپرده";
     private static final String OPEN_ACCOUNT_COST_2 = "ساير - هزار تومان هزينه افتتاح سپرده - پنجاه هزار تومان ته مانده سپرده براي واريزي ها به صندوق";
+    public static final int LAST_LOAN = 5;
 
     private static final Predicate<String> validDescriptions = ((Predicate<String>) BANK_INTEREST::equals)
             .or(WRONG_CREDIT::equals)
@@ -165,7 +166,7 @@ public class TransactionDescValidator {
         String[] tokens = transactionDesc.split("-");
 
         int loanOrder = Order.getOrder(tokens[0]);
-        if ((loanOrder < 1) || (loanOrder > 4)) {
+        if ((loanOrder < 1) || (loanOrder > LAST_LOAN)) {
             return false;
         }
         if (!isDate(tokens[1].trim())) {
