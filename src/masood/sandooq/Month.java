@@ -46,4 +46,17 @@ public class Month {
         }
         return false;
     }
+
+    public static String extractYear(String maybeMonthAndYear) {
+        for (String[] monthName : monthNames) {
+            for (String month : monthName) {
+                if (maybeMonthAndYear.contains(month)) {
+                    if (maybeMonthAndYear.indexOf(month) == 0) {
+                        return maybeMonthAndYear.substring(month.length());
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }

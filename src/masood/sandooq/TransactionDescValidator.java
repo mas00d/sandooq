@@ -210,7 +210,10 @@ public class TransactionDescValidator {
     }
     private static boolean isMonthAndYear(String maybeMonth, String maybeYear) {
         if (!Month.isValid(maybeMonth)) {
-            return false;
+            maybeYear = Month.extractYear(maybeMonth);
+            if (null == maybeYear) {
+                return false;
+            }
         }
         try {
             int year = Integer.parseInt(maybeYear);
