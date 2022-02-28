@@ -217,7 +217,7 @@ public class TransactionDescValidator {
         }
         try {
             int year = Integer.parseInt(maybeYear);
-            if ((year < 1396) || (year > 1400)) {
+            if ((year < 1395) || (year > 1400)) {
                 return false;
             }
         } catch (NumberFormatException e) {
