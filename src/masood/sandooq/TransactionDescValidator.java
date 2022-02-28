@@ -149,7 +149,12 @@ public class TransactionDescValidator {
         transactionDesc = transactionDesc.replace(Transaction.MEMBERSHIP_FEE, "").trim();
 
         String[] tokens = transactionDesc.split(" ");
-        return isMonthAndYear(tokens[0], tokens[1]);
+        if (isMonthAndYear(tokens[0], tokens[1])) {
+            return true;
+        } else {
+            System.out.println("membership with ambiguous date");
+            return isMonthAndYear(tokens[tokens.length - 2], tokens[tokens.length - 1]);
+        }
     }
 
     private static boolean isLoanPaying(String transactionDesc) {
