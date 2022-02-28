@@ -13,16 +13,18 @@ public class TransactionDescValidator {
     private static final String LOAN_PAYMENT = "دريافت وام سري";
     private static final String FIRST_INSTALLMENT = "قسط اول";
     private static final String WRONG_CREDIT = "واريز اشتباه";
+    private static final String WRONG_DEBIT = "برداشت اشتباه";
     private static final String REVERT_WRONG_CREDIT = "برگشت واريز اشتباه";
-    private static final String REVERT_WRONG_CREDIT_2 = "اصلاح برداشت اشتباه";
+    private static final String REVERT_WRONG_DEBIT = "اصلاح برداشت اشتباه";
     private static final String OPEN_ACCOUNT_COST = "ساير - برگشت هزينه افتتاح سپرده";
     private static final String OPEN_ACCOUNT_COST_2 = "ساير - هزار تومان هزينه افتتاح سپرده - پنجاه هزار تومان ته مانده سپرده براي واريزي ها به صندوق";
     public static final int LAST_LOAN = 5;
 
     private static final Predicate<String> validDescriptions = ((Predicate<String>) BANK_INTEREST::equals)
             .or(WRONG_CREDIT::equals)
+            .or(WRONG_DEBIT::equals)
             .or(REVERT_WRONG_CREDIT::equals)
-            .or(REVERT_WRONG_CREDIT_2::equals)
+            .or(REVERT_WRONG_DEBIT::equals)
             .or(BORROW_FROM_THE_FUND::equals)
             .or(OPEN_ACCOUNT_COST::equals)
             .or(OPEN_ACCOUNT_COST_2::equals)
@@ -183,6 +185,10 @@ public class TransactionDescValidator {
         }
         if (!isDate(tokens[1].trim())) {
             return false;
+        }
+        if (tokens.length == 2) {
+            System.out.println("The date of first installment not set");
+            return true;
         }
         if (!tokens[2].trim().startsWith(FIRST_INSTALLMENT)) {
             return false;
