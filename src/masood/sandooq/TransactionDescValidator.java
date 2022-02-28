@@ -14,6 +14,7 @@ public class TransactionDescValidator {
     private static final String FIRST_INSTALLMENT = "قسط اول";
     private static final String WRONG_CREDIT = "واريز اشتباه";
     private static final String REVERT_WRONG_CREDIT = "برگشت واريز اشتباه";
+    private static final String REVERT_WRONG_CREDIT_2 = "اصلاح برداشت اشتباه";
     private static final String OPEN_ACCOUNT_COST = "ساير - برگشت هزينه افتتاح سپرده";
     private static final String OPEN_ACCOUNT_COST_2 = "ساير - هزار تومان هزينه افتتاح سپرده - پنجاه هزار تومان ته مانده سپرده براي واريزي ها به صندوق";
     public static final int LAST_LOAN = 5;
@@ -21,6 +22,7 @@ public class TransactionDescValidator {
     private static final Predicate<String> validDescriptions = ((Predicate<String>) BANK_INTEREST::equals)
             .or(WRONG_CREDIT::equals)
             .or(REVERT_WRONG_CREDIT::equals)
+            .or(REVERT_WRONG_CREDIT_2::equals)
             .or(BORROW_FROM_THE_FUND::equals)
             .or(OPEN_ACCOUNT_COST::equals)
             .or(OPEN_ACCOUNT_COST_2::equals)
