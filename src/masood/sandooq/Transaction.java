@@ -11,11 +11,11 @@ public class Transaction {
     public static final String MEMBERSHIP_FEE = "حق عضويت";
     public static final String INSTALLMENT = "قسط";
     public static final String LOAN_PAYING = "دريافت وام";
-    public static final String KARMOZD = "کارمزد";
+    public static final String[] KARMOZD = {"کارمزد", "آبونمان"};
     public static final String[] TEST_APP = {"فرشاد"};
     public static final String INSTALLMENT_All = "بازپرداخت کامل";
 
-    public static final int KARMOZD_BOUNDARY = -10000;
+    public static final int KARMOZD_BOUNDARY = -50000;
 
 
     private final String transactionRaw;
@@ -46,19 +46,19 @@ public class Transaction {
 
         if (!TransactionDescValidator.isValid(transactionDesc)) {
             //TODO: add KARMOZD transaction to TransactionDescValidator.isValid method instead of here
-            if (transactionDesc.isEmpty()) {
-                if (amount < 0 && amount >= KARMOZD_BOUNDARY) {
-                    if (transactionRaw.contains(KARMOZD)) {
+            if (amount < 0 && amount >= KARMOZD_BOUNDARY) {
+                for (String karmozd : KARMOZD) {
+                    if (transactionRaw.contains(karmozd)) {
                         this.customer = null;
                         this.transactionType = TransactionType.KARMOZD;
                         return;
                     }
-                    for (String testAppStr : TEST_APP) {
-                        if (transactionRaw.contains(testAppStr)) {
-                            this.customer = null;
-                            this.transactionType = TransactionType.TEST_APP;
-                            return;
-                        }
+                }
+                for (String testAppStr : TEST_APP) {
+                    if (transactionRaw.contains(testAppStr)) {
+                        this.customer = null;
+                        this.transactionType = TransactionType.TEST_APP;
+                        return;
                     }
                 }
             }
