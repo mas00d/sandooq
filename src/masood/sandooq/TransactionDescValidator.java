@@ -103,7 +103,12 @@ public class TransactionDescValidator {
                 return false;
             }
         }
-        return isMonthAndYear(tokens[3].trim(), tokens[4].trim());
+        if (isMonthAndYear(tokens[3].trim(), tokens[4].trim())) {
+            return true;
+        } else {
+            System.out.println("isInstallment with ambiguous date");
+            return isMonthAndYear(tokens[tokens.length - 2], tokens[tokens.length - 1]);
+        }
     }
 
     private static boolean isInstallmentAll(String transactionDesc) {
