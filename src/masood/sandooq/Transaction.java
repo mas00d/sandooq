@@ -15,7 +15,7 @@ public class Transaction {
     public static final String[] TEST_APP = {"فرشاد"};
     public static final String INSTALLMENT_All = "بازپرداخت کامل";
 
-    public static final int KARMOZD_BOUNDARY = -3000;
+    public static final int KARMOZD_BOUNDARY = -10000;
 
 
     private final String transactionRaw;
