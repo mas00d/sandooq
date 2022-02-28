@@ -152,10 +152,13 @@ public class TransactionDescValidator {
         }
         transactionDesc = removeCustomerFromTransactionDesc(transactionDesc);
 
-        if (!transactionDesc.startsWith(Transaction.MEMBERSHIP_FEE)) {
+        if (transactionDesc.startsWith(Transaction.MEMBERSHIP_FEE)) {
+            transactionDesc = transactionDesc.replace(Transaction.MEMBERSHIP_FEE, "").trim();
+        } else if (transactionDesc.startsWith(Transaction.MEMBERSHIP_FEE_2)) {
+            transactionDesc = transactionDesc.replace(Transaction.MEMBERSHIP_FEE_2, "").trim();
+        } else {
             return false;
         }
-        transactionDesc = transactionDesc.replace(Transaction.MEMBERSHIP_FEE, "").trim();
 
         String[] tokens = transactionDesc.split(" ");
         if (isMonthAndYear(tokens[0], tokens[1])) {

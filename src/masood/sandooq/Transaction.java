@@ -9,6 +9,7 @@ import java.util.Objects;
 public class Transaction {
 
     public static final String MEMBERSHIP_FEE = "حق عضويت";
+    public static final String MEMBERSHIP_FEE_2 = "کمک به صندوق";
     public static final String INSTALLMENT = "قسط";
     public static final String LOAN_PAYING = "دريافت وام";
     public static final String[] KARMOZD = {"کارمزد", "آبونمان"};
@@ -82,7 +83,7 @@ public class Transaction {
 
 
     private TransactionType evaluateType(String transactionDesc) {
-        if (transactionDesc.contains(MEMBERSHIP_FEE)) {
+        if (transactionDesc.contains(MEMBERSHIP_FEE) || transactionDesc.contains(MEMBERSHIP_FEE_2)) {
             processMemberShipTransaction(transactionDesc);
             return TransactionType.MEMBERSHIP_FEE;
         } else if (transactionDesc.contains(LOAN_PAYING)) {
