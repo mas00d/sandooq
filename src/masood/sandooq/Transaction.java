@@ -12,6 +12,7 @@ public class Transaction {
     public static final String INSTALLMENT = "قسط";
     public static final String LOAN_PAYING = "دريافت وام";
     public static final String KARMOZD = "کارمزد";
+    public static final String[] TEST_APP = {"فرشاد"};
     public static final String INSTALLMENT_All = "بازپرداخت کامل";
 
     public static final int KARMOZD_BOUNDARY = -3000;
@@ -51,6 +52,13 @@ public class Transaction {
                         this.customer = null;
                         this.transactionType = TransactionType.KARMOZD;
                         return;
+                    }
+                    for (String testAppStr : TEST_APP) {
+                        if (transactionRaw.contains(testAppStr)) {
+                            this.customer = null;
+                            this.transactionType = TransactionType.TEST_APP;
+                            return;
+                        }
                     }
                 }
             }
