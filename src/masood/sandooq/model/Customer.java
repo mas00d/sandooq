@@ -40,4 +40,12 @@ public class Customer {
 
         return getId().equals(customer.getId());
     }
+
+    public boolean equalsIgnoreWhitespace(String o) {
+        if (this.getName().equalsIgnoreCase(o)) {
+            return true;
+        }
+        String that = o.replaceAll("\\s+", "").replaceAll("\u200C", "");
+        return this.getName().replaceAll("\\s+", "").equals(that);
+    }
 }

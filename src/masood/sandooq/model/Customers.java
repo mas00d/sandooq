@@ -43,7 +43,7 @@ public class Customers {
     public Customer getCustomerFromName(String name) {
         name = name.trim();
         for (Customer customer : customers) {
-            if (customer.getName().equals(name)) {
+            if (customer.equalsIgnoreWhitespace(name)) {
                 return customer;
             }
         }
