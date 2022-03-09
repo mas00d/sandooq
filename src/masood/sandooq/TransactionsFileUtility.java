@@ -2,10 +2,7 @@ package masood.sandooq;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class TransactionsFileUtility {
     public static final String INPUT_FOLDER = "e:\\Masood\\Projects\\Sandooq\\Program\\input";
@@ -29,6 +26,7 @@ public class TransactionsFileUtility {
             result.addAll(partTransactions.subList(deleteIndex, partTransactions.size()));
         }
 
+        Collections.sort(result);
         return result;
     }
 

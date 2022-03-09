@@ -6,7 +6,7 @@ import masood.sandooq.model.Customers;
 
 import java.util.Objects;
 
-public class Transaction {
+public class Transaction implements Comparable<Transaction> {
 
     public static final String MEMBERSHIP_FEE = "حق عضويت";
     public static final String MEMBERSHIP_FEE_2 = "کمک به صندوق";
@@ -25,6 +25,8 @@ public class Transaction {
     private final int amount;
     private final int balance;
     private final Customer customer;
+    private final String descDate;
+    private final String descTime;
     private int monthNumber;
     private int year;
     private int installmentOrder;
@@ -36,6 +38,14 @@ public class Transaction {
         String[] tokens = transactionRaw.split(",");
         transactionDesc = tokens[tokens.length - 1].trim();
 
+        descDate = tokens[1].trim();
+        if (!descDate.matches("\\d{4}/\\d{2}/\\d{2}")) {
+            throw new RuntimeException("date bad format");
+        }
+        descTime = tokens[2].trim();
+        if (!descTime.matches("\\d{2}:\\d{2}:\\d{2}")) {
+            throw new RuntimeException("time bad format");
+        }
         int creditAmount = Integer.parseInt(tokens[3].trim());
         if (0 != creditAmount) {
             amount = creditAmount;
@@ -179,12 +189,42 @@ public class Transaction {
     }
 
     @Override
+    public int compareTo(Transaction o) {
+        if (this.equals(o)) {
+            return 0;
+        }
+        if (this.descDate.equals(o.descDate)) {
+            if (this.descTime.equals(o.descTime)) {
+                if (this.amount + o.balance == this.balance) {
+                    return 1;
+                } else if (o.amount + this.balance == o.balance) {
+                    return -1;
+                } else {
+                    throw new RuntimeException("can not define order");
+                }
+            } else {
+                return this.descTime.compareTo(o.descTime);
+            }
+        } else {
+            return this.descDate.compareTo(o.descDate);
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Transaction)) return false;
         Transaction that = (Transaction) o;
-        //I use contains instead of equals, because some unicode unexpected characters added to transactionRaw!!!
-        return transactionRaw.contains(that.transactionRaw) || that.transactionRaw.contains(transactionRaw);
+        return this.transactionType == that.transactionType
+                && this.amount == that.amount
+                && this.balance == that.balance
+                && (Objects.equals(this.customer, that.customer))
+                && this.monthNumber == that.monthNumber
+                && this.year == that.year
+                && this.installmentOrder == that.installmentOrder
+                && this.loanPayingOrder == that.loanPayingOrder
+                && this.descDate.equals(that.descDate)
+                && this.descTime.equals(that.descTime);
     }
 
     @Override
