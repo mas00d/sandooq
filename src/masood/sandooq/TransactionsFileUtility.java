@@ -16,16 +16,13 @@ public class TransactionsFileUtility {
 
         for (int i = inputFiles.length - 1; i >= 0; i--) {
             List<Transaction> partTransactions = readTransactions(inputFiles[i]);
-            int deleteIndex = 0;
             assert partTransactions != null;
-            for (; deleteIndex < partTransactions.size(); deleteIndex++) {
-                if (!result.contains(partTransactions.get(deleteIndex))) {
-                    break;
+            for (Transaction tr : partTransactions) {
+                if (!result.contains(tr)) {
+                    result.add(tr);
                 }
             }
-            result.addAll(partTransactions.subList(deleteIndex, partTransactions.size()));
         }
-
         Collections.sort(result);
         return result;
     }
