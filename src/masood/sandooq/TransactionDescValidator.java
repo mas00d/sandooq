@@ -38,6 +38,24 @@ public class TransactionDescValidator {
         return validDescriptions.test(transactionDesc);
     }
 
+    public static TransactionType evaluateTransactionType(String transactionDesc) {
+        if (BANK_INTEREST.equals(transactionDesc)) {
+            return TransactionType.INTEREST;
+        } else if (WRONG_CREDIT.equals(transactionDesc)
+                || WRONG_DEBIT.equals(transactionDesc)
+                || REVERT_WRONG_CREDIT.equals(transactionDesc)
+                || REVERT_WRONG_DEBIT.equals(transactionDesc)
+                || BORROW_FROM_THE_FUND.equals(transactionDesc)
+                || isReturnBorrowFromTheFund(transactionDesc)) {
+            return TransactionType.NEUTRAL;
+        } else if (OPEN_ACCOUNT_COST.equals(transactionDesc)
+                || OPEN_ACCOUNT_COST_2.equals(transactionDesc)) {
+            return TransactionType.KARMOZD;
+        } else {
+            throw new RuntimeException("don't call this method for transaction with customer");
+        }
+    }
+
     private static boolean isReturnBorrowFromTheFund(String transactionDesc) {
         if (!transactionDesc.startsWith(RETURN_BORROW_FROM_THE_FUND)) {
             return false;
@@ -100,7 +118,7 @@ public class TransactionDescValidator {
         if ((loanNameTokens.length > 1) && !loanNameTokens[1].isEmpty()) {
             try {
                 int loanOrder = Integer.parseInt(loanNameTokens[1]);
-                if ((loanOrder < 1) || (loanOrder > 4)) {
+                if ((loanOrder < 1) || (loanOrder > LAST_LOAN)) {
                     return false;
                 }
             } catch (NumberFormatException e) {

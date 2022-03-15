@@ -1,5 +1,6 @@
 package masood.sandooq;
 
+import masood.sandooq.accounting.Accounting;
 import masood.sandooq.io.CustomersReader;
 import masood.sandooq.model.Customer;
 import masood.sandooq.model.Customers;
@@ -22,6 +23,12 @@ public class Main {
             System.out.print(customer.getName() + ":");
             System.out.println(assetCalculator.getAsset(customer));
         }
+        Accounting accounting = new Accounting(obj.transactions);
+        if (!accounting.checkBalanceOfAllTransactions()) {
+            throw new RuntimeException("The order of transactions not correct!");
+        }
+        accounting.iterateAllTransactions();
+        accounting.printSum();
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //TODO: وقتی که می خواهم که یک خط در بین خطوط زیر اضافه کنم، باید همه اندیس ها را باز نویسی کنم. این خوب نیست
 //        NextTransaction[] nextTransactions = new NextTransaction[12];

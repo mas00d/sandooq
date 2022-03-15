@@ -6,5 +6,7 @@ public enum TransactionType {
     MEMBERSHIP_FEE,
     INSTALLMENT,
     KARMOZD,
+    INTEREST,
+    NEUTRAL,
     TEST_APP;
 }

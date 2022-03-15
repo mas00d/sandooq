@@ -78,7 +78,7 @@ public class Transaction implements Comparable<Transaction> {
         this.customer = evaluateCustomer(transactionDesc);
 
         if (this.customer == null) {
-            this.transactionType = TransactionType.OTHER;
+            this.transactionType = TransactionDescValidator.evaluateTransactionType(transactionDesc);
         } else {
             this.transactionType = evaluateType(transactionDesc);
         }

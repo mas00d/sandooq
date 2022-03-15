@@ -3,6 +3,9 @@ package masood.sandooq.model;
 public class Customer {
     private final String id;
     private final String name;
+    private int totalMembershipFee = 0;
+    private int totalReceivedLoan = 0;
+    private int totalInstallment = 0;
 
     Customer(String id, String name) {
         this.id = convertToAscii(id.trim());
@@ -24,6 +27,30 @@ public class Customer {
 
     private String convertToAscii(String input) {
         return input.replaceAll("[^A-Za-z_\\-]+", "");
+    }
+
+    public int getTotalMembershipFee() {
+        return totalMembershipFee;
+    }
+
+    public void addToTotalMembershipFee(int newMembershipFee) {
+        this.totalMembershipFee += newMembershipFee;
+    }
+
+    public int getTotalReceivedLoan() {
+        return totalReceivedLoan;
+    }
+
+    public void addToTotalReceivedLoan(int newReceivedLoan) {
+        this.totalReceivedLoan += newReceivedLoan;
+    }
+
+    public int getTotalInstallment() {
+        return totalInstallment;
+    }
+
+    public void addToTotalInstallment(int newInstallment) {
+        this.totalInstallment += newInstallment;
     }
 
     @Override
