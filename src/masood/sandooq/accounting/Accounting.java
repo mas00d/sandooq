@@ -33,9 +33,9 @@ public class Accounting {
         for (Transaction tr : transactions) {
             customer = tr.getCustomer();
             switch (tr.getTransactionType()) {
-                case MEMBERSHIP_FEE -> customer.addToTotalMembershipFee(tr.getAmount());
-                case LOAN_PAYING -> customer.addToTotalReceivedLoan(tr.getAmount());
-                case INSTALLMENT -> customer.addToTotalInstallment(tr.getAmount());
+                case MEMBERSHIP_FEE -> customer.addMembershipFeeTr(tr);
+                case LOAN_PAYING -> customer.addReceivedLoanTr(tr);
+                case INSTALLMENT -> customer.addInstallmentTr(tr);
                 case KARMOZD, TEST_APP -> NoCustomerTransaction.getInstance().addKarmozdTr(tr);
                 case INTEREST -> NoCustomerTransaction.getInstance().addInterestTr(tr);
                 case NEUTRAL -> NoCustomerTransaction.getInstance().addNeutralTr(tr);

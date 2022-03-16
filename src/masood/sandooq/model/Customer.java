@@ -1,8 +1,16 @@
 package masood.sandooq.model;
 
+import masood.sandooq.Transaction;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Customer {
     private final String id;
     private final String name;
+    private List<Transaction> membershipTrs = new ArrayList<>();
+    private List<Transaction> receivedLoanTrs = new ArrayList<>();
+    private List<Transaction> installmentTrs = new ArrayList<>();
     private int totalMembershipFee = 0;
     private int totalReceivedLoan = 0;
     private int totalInstallment = 0;
@@ -33,24 +41,27 @@ public class Customer {
         return totalMembershipFee;
     }
 
-    public void addToTotalMembershipFee(int newMembershipFee) {
-        this.totalMembershipFee += newMembershipFee;
+    public void addMembershipFeeTr(Transaction tr) {
+        membershipTrs.add(tr);
+        this.totalMembershipFee += tr.getAmount();
     }
 
     public int getTotalReceivedLoan() {
         return totalReceivedLoan;
     }
 
-    public void addToTotalReceivedLoan(int newReceivedLoan) {
-        this.totalReceivedLoan += newReceivedLoan;
+    public void addReceivedLoanTr(Transaction tr) {
+        receivedLoanTrs.add(tr);
+        this.totalReceivedLoan += tr.getAmount();
     }
 
     public int getTotalInstallment() {
         return totalInstallment;
     }
 
-    public void addToTotalInstallment(int newInstallment) {
-        this.totalInstallment += newInstallment;
+    public void addInstallmentTr(Transaction tr) {
+        this.installmentTrs.add(tr);
+        this.totalInstallment += tr.getAmount();
     }
 
     @Override
